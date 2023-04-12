@@ -50,6 +50,11 @@ exports.login = async (req, res) => {
             const passMatch = await bcrypt.compare(password, emailCheck.password);
             let token = await emailCheck.generateAuthToken();
             console.log(token);
+            res.cookie('jwtToken', token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true
+
+            });
             if (passMatch) {
                 res.status(201).json('login successfull')
 
